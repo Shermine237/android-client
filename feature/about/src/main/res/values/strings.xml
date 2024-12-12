@@ -9,19 +9,17 @@
     See https://github.com/openMF/android-client/blob/master/LICENSE.md
 -->
 <resources>
-    <string name="feature_about">About</string>
-    <string name="feature_about_mifos_x_droid">MifosXDroid</string>
-    <string name="feature_about_app">Field Officer Application is an application
-        developed for the Bank staff field officer to keep track of Clients,
-        Centers, Groups, Loan Account, Savings Account, etc.</string>
-    <string name="feature_about_mifos">Developed by Mifos contributors</string>
-    <string name="feature_about_app_version">App Version 1.0.1</string>
-    <string name="feature_about_website">Official Website</string>
+    <string name="feature_about">A Propos</string>
+    <string name="feature_about_mifos_x_droid">NEOBT</string>
+    <string name="feature_about_app">NEOBT est une application concue pour les banques et les microfinances.</string>
+    <string name="feature_about_mifos">Développé par MAVOU CONSULTING</string>
+    <string name="feature_about_app_version">Version 1.0.1</string>
+    <string name="feature_about_website">Site internet</string>
     <string name="feature_about_support_github">Source Code</string>
     <string name="feature_about_support_twitter">Twitter</string>
-    <string name="feature_about_license_sub">License: MPL-2.0</string>
-    <string name="feature_about_license">©2016–2022 Mifos Initiative.</string>
+    <string name="feature_about_license_sub">License: ...</string>
+    <string name="feature_about_license">©2024 MAVOU CONSULTING</string>
 
-    <string name="feature_about_failed_to_load">Failed to load</string>
+    <string name="feature_about_failed_to_load">Erreur de chargement</string>
 
 </resources>

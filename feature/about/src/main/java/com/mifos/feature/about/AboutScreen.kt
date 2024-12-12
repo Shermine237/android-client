@@ -11,6 +11,7 @@ package com.mifos.feature.about
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -69,17 +70,17 @@ internal fun AboutScreen(
         onRetry = { viewModel.getAboutOptions() },
         onOptionClick = {
             when (it) {
-                AboutItems.CONTRIBUTIONS -> uriHandler.openUri("https://github.com/openMF/android-client/graphs/contributors")
+                AboutItems.CONTRIBUTIONS -> uriHandler.openUri("https://mavou.consulting")
 
                 AboutItems.APP_VERSION -> Unit
 
-                AboutItems.OFFICIAL_WEBSITE -> uriHandler.openUri("https://openmf.github.io/mobileapps.github.io/")
+                AboutItems.OFFICIAL_WEBSITE -> uriHandler.openUri("https://mavou.consulting")
 
-                AboutItems.TWITTER -> uriHandler.openUri("https://twitter.com/mifos")
+                AboutItems.TWITTER -> uriHandler.openUri("https://twitter.com/")
 
-                AboutItems.SOURCE_CODE -> uriHandler.openUri("https://github.com/openMF/android-client")
+                AboutItems.SOURCE_CODE -> uriHandler.openUri("https://mavou.consulting")
 
-                AboutItems.LICENSE -> uriHandler.openUri("https://github.com/openMF/android-client/blob/master/LICENSE.md")
+                AboutItems.LICENSE -> uriHandler.openUri("https://mavou.consulting")
             }
         },
     )
@@ -128,12 +129,13 @@ private fun AboutScreenContent(
     onOptionClick: (AboutItems) -> Unit,
 ) {
     Column {
-
-        Image(
-            modifier = Modifier.size(100.dp),
-            painter = painterResource(id = R.drawable.feature_about_ic_launcher),
-            contentDescription = null,
-        )
+        Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+            Image(
+                modifier = Modifier.size(100.dp),
+                painter = painterResource(id = R.drawable.feature_about_ic_launcher),
+                contentDescription = null,
+            )
+        }
         Text(
             modifier = Modifier
                 .fillMaxWidth()
