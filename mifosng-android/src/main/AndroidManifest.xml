@@ -7,6 +7,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-feature android:name="android.hardware.camera.any"/>
 
     <uses-sdk tools:overrideLibrary="androidx.core.splashscreen" />
     <uses-feature
@@ -21,142 +26,32 @@
         android:supportsRtl="true"
         android:windowSoftInputMode="adjustResize"
         android:theme="@style/MaterialAppTheme">
-        <activity android:name=".online.checkerinbox.CheckerInboxPendingTasksActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${GEO_API_KEY}" />
 
         <activity
-            android:name=".activity.splashscreen.SplashScreenActivity"
+            android:name=".AndroidClientActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashScreen">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.login.LoginActivity"
-            android:label="@string/mifos_account"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.home.HomeActivity"
             android:label="home_activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".online.DashboardActivity"
-            android:label="@string/dashboard"
-            android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".online.surveyquestion.SurveyQuestionActivity"
-            android:label="Survey"
-            android:parentActivityName="com.mifos.mifosxdroid.online.ClientActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.mifos.mifosxdroid.online.ClientActivity" />
-        </activity>
-
-        <activity
-            android:name=".online.GroupsActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".online.ClientActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".online.CentersActivity"
-            android:label="@string/title_activity_centers"
-            android:parentActivityName=".activity.home.HomeActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.home.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".online.GenerateCollectionSheetActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_generate_collection_sheet"
-            android:parentActivityName=".activity.home.HomeActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.home.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".online.runreports.RunReportsActivity"
-            android:label="@string/run_report"
-            android:parentActivityName=".activity.home.HomeActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.home.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".activity.pinpointclient.PinpointClientActivity"
-            android:exported="true"
-            android:label="@string/pinpoint"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".activity.pathtracking.PathTrackingActivity"
-            android:label="@string/track_path"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".offline.syncclientpayloads.SyncClientPayloadActivity"
-            android:label="@string/sync_clients"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".offline.syncgrouppayloads.SyncGroupPayloadsActivity"
-            android:label="@string/sync_groups"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".offline.synccenterpayloads.SyncCenterPayloadActivity"
-            android:label="@string/sync_centers"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".offline.syncloanrepaymenttransacition.SyncLoanRepaymentTransactionActivity"
-            android:label="@string/sync_loanrepayments"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.setting.SettingsActivity"
-            android:label="@string/settings"
-            android:parentActivityName=".activity.home.HomeActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.home.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".offline.syncsavingsaccounttransaction.SyncSavingsAccountTransactionActivity"
-            android:label="@string/sync_savingsaccounttransactions"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".passcode.PassCodeActivity"
-            android:label="@string/pass_code"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".activity.about.AboutActivity"
-            android:label="@string/about"
-            android:screenOrientation="portrait" />
-
-        <service
-            android:name=".activity.pathtracking.PathTrackingService"
-            android:exported="false" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.mifos.mifosxdroid.provider"
@@ -164,7 +59,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/path_provider" />
+                android:resource="@xml/feature_client_path_provider" />
         </provider>
     </application>
 

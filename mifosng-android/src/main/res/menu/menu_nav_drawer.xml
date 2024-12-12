@@ -30,12 +30,6 @@
             android:icon="@drawable/feature_report_ic_report_item"
             android:title="@string/run_report"
             />
-        <item
-            android:id="@+id/item_path_tracker"
-            android:checked="false"
-            android:icon="@drawable/ic_path_tracker"
-            android:title="@string/path_tracker"
-            />
 
         <item
             android:id="@+id/item_settings"
@@ -44,21 +38,6 @@
             android:title="@string/settings"
             />
 
-        <item
-            android:id="@+id/about"
-            android:checked="false"
-            android:icon="@drawable/ic_about"
-            android:title="@string/about"
-            />
 
-    </group>
-    <group android:checkableBehavior="single"
-        android:id="@+id/group3">
-        <item
-            android:id="@+id/item_offline"
-            android:checked="false"
-            android:icon="@drawable/ic_offline"
-            android:title="@string/offline"
-            />
     </group>
 </menu>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/android-client/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_loan_application">Loan Application</string>
+    <string name="feature_loan_account_created_successfully">Loan account created successfully</string>
+
+    <string name="feature_loan_product">Loan Product</string>
+    <string name="feature_loan_purpose">Loan Purpose</string>
+    <string name="feature_loan_officer">Loan Officer</string>
+    <string name="feature_loan_fund">Fund</string>
+    <string name="feature_loan_submission_date">Submission Date</string>
+    <string name="feature_loan_disbursed_date">Disbursed Date</string>
+    <string name="feature_loan_select">Select</string>
+    <string name="feature_loan_cancel">Cancel</string>
+
+    <string name="feature_loan_external_id">External ID</string>
+    <string name="feature_loan_principal">Principal</string>
+    <string name="feature_loan_number_of_repayments">Number of Repayments</string>
+    <string name="feature_loan_nominal">Nominal</string>
+    <string name="feature_loan_repaid_every">Repaid Every</string>
+    <string name="feature_loan_loan_terms">Loan Terms</string>
+
+    <string name="feature_loan_link_savings">Link Savings</string>
+    <string name="feature_loan_per_month">Per month</string>
+    <string name="feature_loan_term">Term</string>
+    <string name="feature_loan_amortization">Amortization</string>
+    <string name="feature_loan_interest_calculation_period">Interest Calculation Period</string>
+    <string name="feature_loan_repayment_strategy">Repayment Strategy</string>
+    <string name="feature_loan_interest_type_method">Interest Type Method</string>
+    <string name="feature_loan_calculate_interest_for_exact_days_in">Calculate Interest for exact days in</string>
+    <string name="feature_loan_submit">Submit</string>
+
+
+
+    <string name="feature_loan_failed_to_load_loan">Failed to load loan</string>
+    <string name="feature_loan_failed_to_load_template">Failed to load loan template</string>
+    <string name="feature_loan_failed_to_create_loan_account">Failed to create loan account</string>
+
+    <string name="feature_loan_loan_charges">Loan Charges</string>
+    <string name="feature_loan_failed_to_load_loan_charges">Failed to load loan charges</string>
+    <string name="feature_loan_no_loan_charges">No Loan Charges Available for this client</string>
+
+    <string name="feature_loan_client_id">Client ID</string>
+    <string name="feature_loan_charge_name">Charge Name</string>
+    <string name="feature_loan_charge_amount">Charge Amount</string>
+    <string name="feature_loan_charge_due_date">Charge Due Date</string>
+
+    <string name="feature_loan_charge_dialog">Loan Charge</string>
+    <string name="feature_loan_charge_select">Select</string>
+    <string name="feature_loan_charge_cancel">Cancel</string>
+    <string name="feature_loan_due_date">Due Date</string>
+    <string name="feature_loan_amount">Amount</string>
+    <string name="feature_loan_locale">Locale</string>
+    <string name="feature_loan_charge_submit">Submit</string>
+    <string name="feature_loan_charge_failed_to_load_charge">Failed to load charge</string>
+    <string name="feature_loan_failed_to_create_loan_charge">Failed to create loan charge</string>
+    <string name="feature_loan_message_field_required">Field is required</string>
+    <string name="feature_loan_charge_created_successfully">Loan charge created successfully</string>
+
+    <string name="feature_loan_approve_loan">Approve Loan</string>
+    <string name="feature_loan_loan_approved">Loan Approved</string>
+    <string name="feature_loan_select_date">Select Date</string>
+    <string name="feature_loan_approved_on">Approved On</string>
+    <string name="feature_loan_expected_disbursement_on">Expected Disbursement On</string>
+    <string name="feature_loan_approved_amount">Approved Amount</string>
+    <string name="feature_loan_transaction_amount">Transaction Amount</string>
+    <string name="feature_loan_approval_note">Approval Note</string>
+    <string name="feature_loan_error_not_connected_internet">Not connected to internet</string>
+    <string name="feature_loan_approval_amount_can_not_be_empty">Loan approval amount can not be empty</string>
+    <string name="feature_loan_error_invalid_amount">Invalid amount</string>
+
+    <string name="feature_loan_disburse_loan">Disburse Loan</string>
+    <string name="feature_loan_loan_disburse_successfully">Loan disburse successfully</string>
+    <string name="feature_loan_approval_disbursement_date">Approval Disbursement Date</string>
+    <string name="feature_loan_loan_amount_disbursed">Loan Amount Disbursed</string>
+    <string name="feature_loan_payment_type">Payment Type</string>
+    <string name="feature_loan_disbursement_note">Disbursement Note</string>
+    <string name="feature_loan_error_network_not_available">Network not available</string>
+    <string name="feature_loan_error_amount_can_not_be_empty">Amount can not be empty</string>
+
+    <string name="feature_loan_loan_account_summary">Loan Account Summary</string>
+    <string name="feature_loan_transactions">Transactions</string>
+    <string name="feature_loan_repayment_schedule">Loan Repayment Schedule</string>
+    <string name="feature_loan_documents">Documents</string>
+    <string name="feature_loan_loan_rejected_message">Loan Rejected</string>
+    <string name="feature_loan_loan_in_arrears">Loan in arrears</string>
+    <string name="feature_loan_staff">Staff</string>
+    <string name="feature_loan_summary">Summary</string>
+    <string name="feature_loan">Loan</string>
+    <string name="feature_loan_amount_paid">Amount Paid</string>
+    <string name="feature_loan_balance">Balance</string>
+    <string name="feature_loan_loan_principal">Loan Principal</string>
+    <string name="feature_loan_loan_interest">Loan Interest</string>
+    <string name="feature_loan_loan_fees">Loan Fees</string>
+    <string name="feature_loan_loan_penalty">Loan Penalty</string>
+    <string name="feature_loan_total">Total</string>
+    <string name="feature_loan_make_Repayment">Make Repayment</string>
+    <string name="feature_loan_closed">Loan Closed</string>
+
+    <string name="feature_loan_failed_to_load_loan_repayment">Failed to load loan repayment</string>
+    <string name="feature_loan_repayment_make_sure_every_field_has_a_value">Make sure every field has a value</string>
+    <string name="feature_loan_additional_payment">Additional Payment</string>
+    <string name="feature_loan_account_number">Account Number</string>
+    <string name="feature_loan_repayment_date">Repayment Date</string>
+    <string name="feature_loan_review_payment">Review Payment</string>
+    <string name="feature_loan_dialog_action_pay_now">Pay Now</string>
+    <string name="feature_loan_loan_amount_due">Amount Due</string>
+    <string name="feature_loan_dialog_message_sync_transaction">Dialog message sync transaction</string>
+    <string name="feature_loan_sync_previous_transaction">Sync Previous Transaction</string>
+    <string name="feature_loan_dialog_action_ok">Ok</string>
+    <string name="feature_loan_loan_repayment">Repayment</string>
+    <string name="feature_loan_payment_failed">Payment Failed</string>
+
+    <string name="feature_loan_overdue">Overdue</string>
+    <string name="feature_loan_pending">Pending</string>
+    <string name="feature_loan_complete">Complete</string>
+    <string name="feature_loan_date">Date</string>
+    <string name="feature_loan_status">Status</string>
+    <string name="feature_loan_loan_repayment_schedule">Loan Repayment Schedule</string>
+    <string name="feature_loan_loan_transactions">Loan Transactions</string>
+    <string name="feature_loan_no_transactions">No Transactions</string>
+    <string name="feature_loan_id">Id</string>
+    <string name="feature_loan_office">Office</string>
+    <string name="feature_loan_break_down">Break Down</string>
+</resources>

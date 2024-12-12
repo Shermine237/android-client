@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/android-client/blob/master/LICENSE.md
+-->
 <resources>
     <string name="core_domain_enter_credentials">Please enter your credentials</string>
     <string name="core_domain_error_password_length">Invalid password length</string>
@@ -19,4 +28,6 @@
 
     <string name="core_domain_error_tenant_blank">Server tenant cannot be blank</string>
     <string name="core_domain_error_tenant_invalid">Server tenant must only contain alphanumeric characters</string>
+
+
 </resources>

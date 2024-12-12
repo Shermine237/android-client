@@ -1,5 +1,10 @@
 /*
- * This project is licensed under the open source MPL V2.
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
  * See https://github.com/openMF/android-client/blob/master/LICENSE.md
  */
 package com.mifos.core.network.services
@@ -23,10 +28,10 @@ import rx.Observable
  */
 interface DocumentService {
     @GET("{entityType}/{entityId}/" + APIEndPoint.DOCUMENTS)
-    fun getDocuments(
-        @Path("entityType") entityType: String?,
-        @Path("entityId") entityId: Int
-    ): Observable<List<Document>>
+    suspend fun getDocuments(
+        @Path("entityType") entityType: String,
+        @Path("entityId") entityId: Int,
+    ): List<Document>
 
     /**
      * @param entityType              - Type for which document is being uploaded (Client, Loan
@@ -43,7 +48,7 @@ interface DocumentService {
         @Path("entityId") entityId: Int,
         @Part("name") nameOfDocument: String?,
         @Part("description") description: String?,
-        @Part typedFile: MultipartBody.Part?
+        @Part typedFile: MultipartBody.Part?,
     ): Observable<GenericResponse>
 
     /**
@@ -59,11 +64,11 @@ interface DocumentService {
      * @return ResponseBody
      */
     @GET("{entityType}/{entityId}/" + APIEndPoint.DOCUMENTS + "/{documentId}/attachment")
-    fun downloadDocument(
-        @Path("entityType") entityType: String?,
+    suspend fun downloadDocument(
+        @Path("entityType") entityType: String,
         @Path("entityId") entityId: Int,
-        @Path("documentId") documentId: Int
-    ): Observable<ResponseBody>
+        @Path("documentId") documentId: Int,
+    ): ResponseBody
 
     /**
      * This Service is for Deleting the Document with EntityType and EntityId and Document Id.
@@ -78,11 +83,11 @@ interface DocumentService {
      * @return
      */
     @DELETE("{entityType}/{entityId}/" + APIEndPoint.DOCUMENTS + "/{documentId}")
-    fun removeDocument(
-        @Path("entityType") entityType: String?,
+    suspend fun removeDocument(
+        @Path("entityType") entityType: String,
         @Path("entityId") entityId: Int,
-        @Path("documentId") documentId: Int
-    ): Observable<GenericResponse>
+        @Path("documentId") documentId: Int,
+    ): GenericResponse
 
     /**
      * This Service for Updating the Document with EntityType and EntityId and Document Id.
@@ -107,6 +112,6 @@ interface DocumentService {
         @Path("documentId") documentId: Int,
         @Part("name") nameOfDocument: String?,
         @Part("description") description: String?,
-        @Part typedFile: MultipartBody.Part?
+        @Part typedFile: MultipartBody.Part?,
     ): Observable<GenericResponse>
 }

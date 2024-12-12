@@ -1,14 +1,25 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/android-client/blob/master/LICENSE.md
+ */
 package com.mifos.feature.client.clientDetails.ui
 
 import android.graphics.Bitmap
 import android.os.Environment
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.request.ImageResult
+import com.mifos.core.common.utils.Constants
 import com.mifos.core.common.utils.Resource
-import com.mifos.core.domain.use_cases.DeleteClientImageUseCase
-import com.mifos.core.domain.use_cases.GetClientDetailsUseCase
-import com.mifos.core.domain.use_cases.UploadClientImageUseCase
+import com.mifos.core.domain.useCases.DeleteClientImageUseCase
+import com.mifos.core.domain.useCases.GetClientDetailsUseCase
+import com.mifos.core.domain.useCases.UploadClientImageUseCase
 import com.mifos.core.network.utils.ImageLoaderUtils
 import com.mifos.core.objects.accounts.loan.LoanAccount
 import com.mifos.core.objects.accounts.savings.SavingsAccount
@@ -31,16 +42,18 @@ class ClientDetailsViewModel @Inject constructor(
     private val uploadClientImageUseCase: UploadClientImageUseCase,
     private val getClientDetailsUseCase: GetClientDetailsUseCase,
     private val deleteClientImageUseCase: DeleteClientImageUseCase,
-    private val imageLoaderUtils: ImageLoaderUtils
+    private val imageLoaderUtils: ImageLoaderUtils,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+
+    val clientId = savedStateHandle.getStateFlow(key = Constants.CLIENT_ID, initialValue = 0)
 
     private val _clientDetailsUiState =
         MutableStateFlow<ClientDetailsUiState>(ClientDetailsUiState.Empty)
     val clientDetailsUiState = _clientDetailsUiState.asStateFlow()
 
-    private val _loanAccounts = MutableStateFlow<List<LoanAccount>?>(null)
-    val loanAccount = _loanAccounts.asStateFlow()
-
+    private val loanAccounts = MutableStateFlow<List<LoanAccount>?>(null)
+    val loanAccount = loanAccounts.asStateFlow()
 
     private val _savingsAccounts = MutableStateFlow<List<SavingsAccount>?>(null)
     val savingsAccounts = _savingsAccounts.asStateFlow()
@@ -50,7 +63,6 @@ class ClientDetailsViewModel @Inject constructor(
 
     private val _showLoading = MutableStateFlow(true)
     val showLoading = _showLoading.asStateFlow()
-
 
     private fun uploadImage(id: Int, pngFile: File) = viewModelScope.launch(Dispatchers.IO) {
         uploadClientImageUseCase(id, pngFile).collect { result ->
@@ -68,7 +80,7 @@ class ClientDetailsViewModel @Inject constructor(
                 is Resource.Success -> {
                     _clientDetailsUiState.value = ClientDetailsUiState.ShowUploadImageSuccessfully(
                         result.data,
-                        pngFile.absolutePath
+                        pngFile.absolutePath,
                     )
                     _showLoading.value = false
                 }
@@ -109,7 +121,7 @@ class ClientDetailsViewModel @Inject constructor(
 
                 is Resource.Success -> {
                     _client.value = result.data?.client
-                    _loanAccounts.value = result.data?.clientAccounts?.loanAccounts
+                    loanAccounts.value = result.data?.clientAccounts?.loanAccounts
                     _savingsAccounts.value = result.data?.clientAccounts?.savingsAccounts
                     _showLoading.value = false
                 }
@@ -117,12 +129,11 @@ class ClientDetailsViewModel @Inject constructor(
         }
     }
 
-
     fun saveClientImage(clientId: Int, bitmap: Bitmap) {
         try {
             val clientImageFile = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                "/client_image.png"
+                "/client_image.png",
             )
             clientImageFile.createNewFile()
             val fOut = FileOutputStream(clientImageFile)

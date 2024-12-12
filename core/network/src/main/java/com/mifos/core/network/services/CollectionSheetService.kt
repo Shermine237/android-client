@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/android-client/blob/master/LICENSE.md
+ */
 package com.mifos.core.network.services
 
 import com.mifos.core.model.APIEndPoint
@@ -16,7 +25,6 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
-import rx.Observable
 
 /**
  * Created by Tarun on 06-07-2017.
@@ -24,14 +32,15 @@ import rx.Observable
 interface CollectionSheetService {
     @POST(APIEndPoint.COLLECTION_SHEET + "?command=generateCollectionSheet")
     suspend fun getIndividualCollectionSheet(
-        @Body payload: RequestCollectionSheetPayload?
+        @Body payload: RequestCollectionSheetPayload?,
     ): IndividualCollectionSheet
 
     @POST(APIEndPoint.COLLECTION_SHEET + "?command=saveCollectionSheet")
-    fun saveindividualCollectionSheet(
-        @Body payload: IndividualCollectionSheetPayload?
-    ): Observable<GenericResponse>
-    //Productive CollectionSheet Endpoints
+    suspend fun saveindividualCollectionSheet(
+        @Body payload: IndividualCollectionSheetPayload?,
+    ): GenericResponse
+    // Productive CollectionSheet Endpoints
+
     /**
      * Endpoint to fetch Productive CollectionSheet
      * @param format "dd MMMM yyyy"
@@ -42,13 +51,13 @@ interface CollectionSheetService {
      * @return List of CenterDetail
      */
     @GET(APIEndPoint.CENTERS)
-    fun fetchCenterDetails(
+    suspend fun fetchCenterDetails(
         @Query("dateFormat") format: String?,
         @Query("locale") locale: String?,
         @Query("meetingDate") meetingDate: String?,
         @Query("officeId") officeId: Int,
-        @Query("staffId") staffId: Int
-    ): Observable<List<CenterDetail>>
+        @Query("staffId") staffId: Int,
+    ): List<CenterDetail>
 
     /**
      * Request Endpoint to fetch Productive CollectionSheet
@@ -57,30 +66,31 @@ interface CollectionSheetService {
      * @return CollectionSheetResponse
      */
     @POST(APIEndPoint.CENTERS + "/{centerId}" + "?command=generateCollectionSheet")
-    fun fetchProductiveSheet(
+    suspend fun fetchProductiveSheet(
         @Path("centerId") centerId: Int,
-        @Body payload: CollectionSheetRequestPayload?
-    ): Observable<CollectionSheetResponse>
+        @Body payload: CollectionSheetRequestPayload?,
+    ): CollectionSheetResponse
 
     @POST(APIEndPoint.CENTERS + "/{centerId}" + "?command=saveCollectionSheet")
-    fun submitProductiveSheet(
+    suspend fun submitProductiveSheet(
         @Path("centerId") centerId: Int,
-        @Body payload: ProductiveCollectionSheetPayload?
-    ): Observable<GenericResponse>
+        @Body payload: ProductiveCollectionSheetPayload?,
+    ): GenericResponse
 
     @POST(APIEndPoint.GROUPS + "/{groupId}" + "?command=generateCollectionSheet")
-    fun fetchCollectionSheet(
+    suspend fun fetchCollectionSheet(
         @Path("groupId") groupId: Int,
-        @Body payload: CollectionSheetRequestPayload?
-    ): Observable<CollectionSheetResponse>
+        @Body payload: CollectionSheetRequestPayload?,
+    ): CollectionSheetResponse
 
     @POST(APIEndPoint.GROUPS + "/{groupId}" + "?command=saveCollectionSheet")
-    fun submitCollectionSheet(
-        @Path("groupId") groupId: Int, @Body payload: CollectionSheetPayload?
-    ): Observable<GenericResponse>
+    suspend fun submitCollectionSheet(
+        @Path("groupId") groupId: Int,
+        @Body payload: CollectionSheetPayload?,
+    ): GenericResponse
 
     @GET(APIEndPoint.CENTERS + "/{centerId}?associations=groupMembers, collectionMeetingCalendar")
-    fun fetchGroupsAssociatedWithCenter(
-        @Path("centerId") centerId: Int
-    ): Observable<CenterWithAssociations>
+    suspend fun fetchGroupsAssociatedWithCenter(
+        @Path("centerId") centerId: Int,
+    ): CenterWithAssociations
 }

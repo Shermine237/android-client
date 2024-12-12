@@ -74,25 +74,14 @@ open class HomeActivity : MifosBaseActivity(), NavigationView.OnNavigationItemSe
         }*/
         clearFragmentBackStack()
         when (item.itemId) {
-            R.id.item_checker_inbox -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.checkerInboxPendingTasksActivity)
-            }
-
-            R.id.item_path_tracker -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.pathTrackingActivity)
-            }
-
-            R.id.item_offline -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.offlineDashboardFragment)
-            }
 
             R.id.individual_collection_sheet -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.COLLECTION_TYPE, Constants.EXTRA_COLLECTION_INDIVIDUAL)
-                findNavController(R.id.nav_host_fragment).navigate(
-                    R.id.generateCollectionSheetActivity,
-                    bundle
-                )
+//                findNavController(R.id.nav_host_fragment).navigate(
+//                    R.id.generateCollectionSheetActivity,
+//                    bundle
+//                )
             }
 
             R.id.collection_sheet -> {
@@ -101,10 +90,10 @@ open class HomeActivity : MifosBaseActivity(), NavigationView.OnNavigationItemSe
                     Constants.COLLECTION_TYPE,
                     Constants.EXTRA_COLLECTION_COLLECTION
                 )
-                findNavController(R.id.nav_host_fragment).navigate(
-                    R.id.generateCollectionSheetActivity,
-                    bundle
-                )
+//                findNavController(R.id.nav_host_fragment).navigate(
+//                    R.id.generateCollectionSheetActivity,
+//                    bundle
+//                )
             }
 
             R.id.item_settings -> {
@@ -112,11 +101,7 @@ open class HomeActivity : MifosBaseActivity(), NavigationView.OnNavigationItemSe
             }
 
             R.id.runreport -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.runReportsActivity)
-            }
-
-            R.id.about -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.aboutActivity)
+//                findNavController(R.id.nav_host_fragment).navigate(R.id.runReportsActivity)
             }
         }
         binding.drawer.closeDrawer(GravityCompat.START)

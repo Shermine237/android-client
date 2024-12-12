@@ -1,11 +1,6 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.mifos.MifosBuildType
 
-/*
- * This project is licensed under the open source MPL V2.
- * See https://github.com/openMF/android-client/blob/master/LICENSE.md
- */
-
 plugins {
     alias(libs.plugins.mifos.android.application)
     alias(libs.plugins.mifos.android.application.compose)
@@ -16,8 +11,6 @@ plugins {
     alias(libs.plugins.secrets)
     alias(libs.plugins.androidx.navigation)
 }
-
-apply(from = "../config/quality/quality.gradle")
 
 android {
     namespace = "com.mifos.mifosxdroid"
@@ -70,13 +63,6 @@ android {
         }
     }
 
-    lint {
-        abortOnError = false
-        disable += "InvalidPackage"
-        disable += "MissingTranslation"
-        disable += "OutdatedLibrary"
-    }
-
     // Exclude duplicated Hamcrest LICENSE.txt from being packaged into the apk.
     // This is a workaround for https://code.google.com/p/android/issues/detail?id=65445.
     // The Hamcrest is used in tests.
@@ -126,7 +112,8 @@ secrets {
 }
 
 dependencies {
-
+    implementation(projects.feature.offline)
+    implementation(projects.feature.savings)
     implementation(projects.feature.note)
     implementation(projects.feature.auth)
     implementation(projects.feature.client)
@@ -138,6 +125,14 @@ dependencies {
     implementation(projects.feature.about)
     implementation(projects.feature.report)
     implementation(projects.feature.pathTracking)
+    implementation(projects.feature.activate)
+    implementation(projects.feature.loan)
+    implementation(projects.feature.document)
+    implementation(projects.feature.dataTable)
+    implementation(projects.feature.search)
+    implementation(projects.feature.splash)
+
+    implementation(projects.libs.mifosPasscode)
 
     implementation(projects.core.common)
     implementation(projects.core.ui)
@@ -186,7 +181,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.converter.scalars)
     implementation(libs.adapter.rxjava)
-    implementation(libs.okhttp)
+    implementation(libs.squareup.okhttp)
     implementation(libs.logging.interceptor)
 
     implementation(libs.fliptables)
@@ -210,9 +205,6 @@ dependencies {
 
     //glide dependency
     implementation(libs.glide)
-
-    //mifos passcode dependency
-    implementation(libs.mifos.passcode)
 
     // Mockito and jUnit dependencies
     testImplementation(libs.junit4)
@@ -261,4 +253,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(libs.androidx.lifecycle.runtimeCompose)
+
+    //coil
+    implementation(libs.coil.kt.compose)
+
 }

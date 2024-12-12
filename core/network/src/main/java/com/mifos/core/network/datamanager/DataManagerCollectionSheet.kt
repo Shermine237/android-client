@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/android-client/blob/master/LICENSE.md
+ */
 package com.mifos.core.network.datamanager
 
 import com.mifos.core.network.BaseApiManager
@@ -11,7 +20,6 @@ import com.mifos.core.objects.collectionsheet.CollectionSheetResponse
 import com.mifos.core.objects.collectionsheet.IndividualCollectionSheet
 import com.mifos.core.objects.collectionsheet.ProductiveCollectionSheetPayload
 import com.mifos.core.objects.group.CenterWithAssociations
-import rx.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,65 +28,77 @@ import javax.inject.Singleton
  */
 @Singleton
 class DataManagerCollectionSheet @Inject constructor(
-    private val mBaseApiManager: BaseApiManager
+    private val mBaseApiManager: BaseApiManager,
 ) {
     /**
      * Individual CollectionSheet API
      */
     suspend fun getIndividualCollectionSheet(
-        payload: RequestCollectionSheetPayload?
+        payload: RequestCollectionSheetPayload?,
     ): IndividualCollectionSheet {
         return mBaseApiManager.collectionSheetApi.getIndividualCollectionSheet(payload)
     }
 
-    fun saveIndividualCollectionSheet(
-        payload: IndividualCollectionSheetPayload?
-    ): Observable<GenericResponse> {
+    suspend fun saveIndividualCollectionSheet(
+        payload: IndividualCollectionSheetPayload?,
+    ): GenericResponse {
         return mBaseApiManager.collectionSheetApi.saveindividualCollectionSheet(payload)
     }
 
     /**
      * Productive CollectionSheet API
      */
-    fun fetchCenterDetails(
-        format: String?, locale: String?, meetingDate: String?, officeId: Int, staffId: Int
-    ): Observable<List<CenterDetail>> {
+    suspend fun fetchCenterDetails(
+        format: String?,
+        locale: String?,
+        meetingDate: String?,
+        officeId: Int,
+        staffId: Int,
+    ): List<CenterDetail> {
         return mBaseApiManager.collectionSheetApi.fetchCenterDetails(
-            format, locale, meetingDate, officeId, staffId
+            format,
+            locale,
+            meetingDate,
+            officeId,
+            staffId,
         )
     }
 
-    fun fetchProductiveCollectionSheet(
-        centerId: Int, payload: CollectionSheetRequestPayload?
-    ): Observable<CollectionSheetResponse> {
+    suspend fun fetchProductiveCollectionSheet(
+        centerId: Int,
+        payload: CollectionSheetRequestPayload?,
+    ): CollectionSheetResponse {
         return mBaseApiManager.collectionSheetApi.fetchProductiveSheet(centerId, payload)
     }
 
-    fun submitProductiveSheet(
-        centerId: Int, payload: ProductiveCollectionSheetPayload?
-    ): Observable<GenericResponse> {
+    suspend fun submitProductiveSheet(
+        centerId: Int,
+        payload: ProductiveCollectionSheetPayload?,
+    ): GenericResponse {
         return mBaseApiManager.collectionSheetApi.submitProductiveSheet(centerId, payload)
     }
 
     /**
      * CollectionSheet API
      */
-    fun fetchCollectionSheet(
-        groupId: Int, payload: CollectionSheetRequestPayload?
-    ): Observable<CollectionSheetResponse> {
+    suspend fun fetchCollectionSheet(
+        groupId: Int,
+        payload: CollectionSheetRequestPayload?,
+    ): CollectionSheetResponse {
         return mBaseApiManager.collectionSheetApi.fetchCollectionSheet(groupId, payload)
     }
 
-    fun submitCollectionSheet(
-        groupId: Int, payload: CollectionSheetPayload?
-    ): Observable<GenericResponse> {
+    suspend fun submitCollectionSheet(
+        groupId: Int,
+        payload: CollectionSheetPayload?,
+    ): GenericResponse {
         return mBaseApiManager.collectionSheetApi.submitCollectionSheet(groupId, payload)
     }
 
     /**
      * Associated groups API
      */
-    fun fetchGroupsAssociatedWithCenter(centerId: Int): Observable<CenterWithAssociations> {
+    suspend fun fetchGroupsAssociatedWithCenter(centerId: Int): CenterWithAssociations {
         return mBaseApiManager.collectionSheetApi.fetchGroupsAssociatedWithCenter(centerId)
     }
 }

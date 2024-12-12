@@ -30,10 +30,14 @@ import com.mifos.core.designsystem.theme.BluePrimaryDark
 
 @Composable
 fun MifosTextFieldDropdown(
+    modifier: Modifier = Modifier
+        .fillMaxWidth()
+        .padding(start = 16.dp, end = 16.dp),
     value: String,
     onValueChanged: (String) -> Unit,
     onOptionSelected: (Int, String) -> Unit,
-    label: Int,
+    label: Int? = null,
+    labelString: String? = null,
     options: List<String>,
     readOnly: Boolean = false
 ) {
@@ -46,14 +50,12 @@ fun MifosTextFieldDropdown(
         OutlinedTextField(
             value = value,
             onValueChange = { onValueChanged(it) },
-            label = { Text(text = stringResource(id = label)) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp)
-                .menuAnchor(),
+            label = { Text(text = labelString ?: label?.let { stringResource(id = label) } ?: "") },
+            modifier = modifier.menuAnchor(),
             maxLines = 1,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = if (isSystemInDarkTheme()) BluePrimaryDark else BluePrimary,
+                focusedLabelColor = if (isSystemInDarkTheme()) BluePrimaryDark else BluePrimary,
             ),
             textStyle = LocalDensity.current.run {
                 TextStyle(fontSize = 18.sp)

@@ -1,5 +1,10 @@
 /*
- * This project is licensed under the open source MPL V2.
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
  * See https://github.com/openMF/android-client/blob/master/LICENSE.md
  */
 package com.mifos.core.common.utils
@@ -26,7 +31,7 @@ object Constants {
     const val ENTITY_TYPE_STAFF = "staff"
     const val ENTITY_TYPE_CLIENT_IDENTIFIERS = "client_identifiers"
 
-    //Search Entities
+    // Search Entities
     const val SEARCH_ENTITY_CLIENT = "CLIENT"
     const val SEARCH_ENTITY_GROUP = "GROUP"
     const val SEARCH_ENTITY_LOAN = "LOAN"
@@ -79,6 +84,7 @@ object Constants {
     const val ACTIVATE_CENTER = "activate_center"
     const val ACTIVATE_GROUP = "activate_group"
     const val ACTIVATE_TYPE = "activation_type"
+    const val ACTIVATE_ID = "activation_id"
     const val INTIAL_LOGIN = "initial_login"
     const val INDIVIDUAL_SHEET = "collection_sheet"
     const val DISBURSEMENT_DATE = "disbursement_date"
@@ -93,7 +99,7 @@ object Constants {
     const val SAVED = "SAVED"
     const val FILLNOW = "FillNow"
 
-    //This needs to be 8 bits because validateRequestPermissionsRequestCode
+    // This needs to be 8 bits because validateRequestPermissionsRequestCode
     // in FragmentActivity requires requestCode to be of 8 bits, meaning the range is from 0 to 255.
     const val REQUEST_PERMISSION_SETTING = 254
 
@@ -204,4 +210,19 @@ object Constants {
     const val CURR_PASSWORD = "currentPassword"
     const val IS_TO_UPDATE_PASS_CODE = "updatePassCode"
     const val HAS_SETTING_CHANGED = "hasSettingsChanged"
+
+    const val TENANT = "tenant"
+    const val BASE_URL = "base_url"
+    const val PASSCODE = "preferences_mifos_passcode_string"
+    const val THEME = "theme"
+    const val LANGUAGE = "language_type"
+
+    // Compose Navigation KEY
+    const val REPORT_TYPE_ITEM = "report_type_item"
+    const val REPORT_PARAMETER_RESPONSE = "report_parameter_response"
+    const val LOAN_WITH_ASSOCIATIONS = "loanWithAssociation"
+    const val PASSCODE_INITIAL_LOGIN = "passcode_initial_login"
+    const val DATA_TABLE_NAV_DATA = "data_table_nav_data"
+    const val DATA_TABLE_DATA_NAV_DATA = "data_table_data_nav_data"
+    const val DATA_TABLE_LIST_NAV_DATA = "data_table_list_nav_data"
 }

@@ -1,5 +1,10 @@
 /*
- * This project is licensed under the open source MPL V2.
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
  * See https://github.com/openMF/android-client/blob/master/LICENSE.md
  */
 package com.mifos.core.network.services
@@ -26,30 +31,30 @@ interface ChargeService {
     fun listAllCharges(): Observable<ResponseBody>
 
     @GET(APIEndPoint.CLIENTS + "/{clientId}/charges/template")
-    fun getAllChargesS(@Path("clientId") clientId: Int): Observable<ChargeTemplate>
+    suspend fun getAllChargesS(@Path("clientId") clientId: Int): ChargeTemplate
 
     @GET(APIEndPoint.LOANS + "/{loanId}/charges/template")
-    fun getAllChargeV3(@Path("loanId") loanId: Int): Observable<ResponseBody>
+    suspend fun getAllChargeV3(@Path("loanId") loanId: Int): ResponseBody
 
     @GET(APIEndPoint.CLIENTS + "/{clientId}/charges")
     fun getListOfCharges(
         @Path("clientId") clientId: Int,
         @Query("offset") offset: Int,
-        @Query("limit") limit: Int
+        @Query("limit") limit: Int,
     ): Observable<Page<Charges>>
 
     @POST(APIEndPoint.CLIENTS + "/{clientId}/charges")
-    fun createCharges(
+    suspend fun createCharges(
         @Path("clientId") clientId: Int,
-        @Body chargesPayload: ChargesPayload?
-    ): Observable<ChargeCreationResponse>
+        @Body chargesPayload: ChargesPayload,
+    ): ChargeCreationResponse
 
     @GET(APIEndPoint.LOANS + "/{loanId}/charges")
     fun getListOfLoanCharges(@Path("loanId") loanId: Int): Observable<Page<Charges>>
 
     @POST(APIEndPoint.LOANS + "/{loanId}/charges")
-    fun createLoanCharges(
+    suspend fun createLoanCharges(
         @Path("loanId") loanId: Int,
-        @Body chargesPayload: ChargesPayload?
-    ): Observable<ChargeCreationResponse>
+        @Body chargesPayload: ChargesPayload,
+    ): ChargeCreationResponse
 }

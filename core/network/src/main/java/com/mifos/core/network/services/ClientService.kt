@@ -1,5 +1,10 @@
 /*
- * This project is licensed under the open source MPL V2.
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
  * See https://github.com/openMF/android-client/blob/master/LICENSE.md
  */
 package com.mifos.core.network.services
@@ -45,7 +50,7 @@ interface ClientService {
     fun getAllClients(
         @Query("paged") b: Boolean,
         @Query("offset") offset: Int,
-        @Query("limit") limit: Int
+        @Query("limit") limit: Int,
     ): Observable<Page<Client>>
 
     @GET(APIEndPoint.CLIENTS + "/{clientId}")
@@ -55,13 +60,13 @@ interface ClientService {
     @POST(APIEndPoint.CLIENTS + "/{clientId}/images")
     fun uploadClientImage(
         @Path("clientId") clientId: Int,
-        @Part file: MultipartBody.Part?
+        @Part file: MultipartBody.Part?,
     ): Observable<ResponseBody>
 
     @DELETE(APIEndPoint.CLIENTS + "/{clientId}/images")
     fun deleteClientImage(@Path("clientId") clientId: Int): Observable<ResponseBody>
 
-    //TODO: Implement when API Fixed
+    // TODO: Implement when API Fixed
     //    @GET("/clients/{clientId}/images")
     //    Observable<TypedString> getClientImage(@Path("clientId") int clientId);
     @POST(APIEndPoint.CLIENTS)
@@ -80,7 +85,7 @@ interface ClientService {
      *
      * @param clientId Client Id
      * @return List<Identifier>
-    </Identifier> */
+     </Identifier> */
     @GET(APIEndPoint.CLIENTS + "/{clientId}/" + APIEndPoint.IDENTIFIERS)
     fun getClientIdentifiers(@Path("clientId") clientId: Int): Observable<List<Identifier>>
 
@@ -94,10 +99,10 @@ interface ClientService {
      * @return IdentifierCreationResponse
      */
     @POST(APIEndPoint.CLIENTS + "/{clientId}/identifiers")
-    fun createClientIdentifier(
+    suspend fun createClientIdentifier(
         @Path("clientId") clientId: Int,
-        @Body identifierPayload: IdentifierPayload?
-    ): Observable<IdentifierCreationResponse>
+        @Body identifierPayload: IdentifierPayload,
+    ): IdentifierCreationResponse
 
     /**
      * This Service is for the Fetching the Client Identifier Template.
@@ -123,7 +128,7 @@ interface ClientService {
     @DELETE(APIEndPoint.CLIENTS + "/{clientId}/" + APIEndPoint.IDENTIFIERS + "/{identifierId}")
     fun deleteClientIdentifier(
         @Path("clientId") clientId: Int,
-        @Path("identifierId") identifierId: Int
+        @Path("identifierId") identifierId: Int,
     ): Observable<GenericResponse>
 
     /**
@@ -141,9 +146,9 @@ interface ClientService {
      * @return ClientAddressResponse
      */
     @GET(APIEndPoint.DATATABLES + "/client_pinpoint_location/{clientId}")
-    fun getClientPinpointLocations(
-        @Path("clientId") clientId: Int
-    ): Observable<List<ClientAddressResponse>>
+    suspend fun getClientPinpointLocations(
+        @Path("clientId") clientId: Int,
+    ): List<ClientAddressResponse>
 
     /**
      * This is the service for adding the new Client Pinpoint Location in dataTable
@@ -157,10 +162,10 @@ interface ClientService {
      * @return GenericResponse
      */
     @POST(APIEndPoint.DATATABLES + "/client_pinpoint_location/{clientId}")
-    fun addClientPinpointLocation(
+    suspend fun addClientPinpointLocation(
         @Path("clientId") clientId: Int,
-        @Body clientAddressRequest: ClientAddressRequest?
-    ): Observable<GenericResponse>
+        @Body clientAddressRequest: ClientAddressRequest?,
+    ): GenericResponse
 
     /**
      * This is the service for deleting the pinpoint location from the DataTable
@@ -174,10 +179,10 @@ interface ClientService {
      * @return GenericResponse
      */
     @DELETE(APIEndPoint.DATATABLES + "/client_pinpoint_location/{apptableId}/{datatableId}")
-    fun deleteClientPinpointLocation(
+    suspend fun deleteClientPinpointLocation(
         @Path("apptableId") apptableId: Int,
-        @Path("datatableId") datatableId: Int
-    ): Observable<GenericResponse>
+        @Path("datatableId") datatableId: Int,
+    ): GenericResponse
 
     /**
      * This is the service for updating the pinpoint location from DataTable
@@ -192,11 +197,11 @@ interface ClientService {
      * @return GenericResponse
      */
     @PUT(APIEndPoint.DATATABLES + "/client_pinpoint_location/{apptableId}/{datatableId}")
-    fun updateClientPinpointLocation(
+    suspend fun updateClientPinpointLocation(
         @Path("apptableId") apptableId: Int,
         @Path("datatableId") datatableId: Int,
-        @Body address: ClientAddressRequest?
-    ): Observable<GenericResponse>
+        @Body address: ClientAddressRequest?,
+    ): GenericResponse
 
     /**
      * This is the service to activate the client
@@ -209,6 +214,6 @@ interface ClientService {
     @POST(APIEndPoint.CLIENTS + "/{clientId}?command=activate")
     fun activateClient(
         @Path("clientId") clientId: Int,
-        @Body clientActivate: ActivatePayload?
+        @Body clientActivate: ActivatePayload?,
     ): Observable<GenericResponse>
 }

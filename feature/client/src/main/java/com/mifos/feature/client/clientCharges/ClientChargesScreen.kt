@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/android-client/blob/master/LICENSE.md
+ */
 @file:OptIn(ExperimentalMaterialApi::class)
 
 package com.mifos.feature.client.clientCharges
@@ -24,7 +33,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -53,15 +65,15 @@ import com.mifos.core.designsystem.theme.BlueSecondary
 import com.mifos.core.designsystem.theme.DarkGray
 import com.mifos.core.objects.client.Charges
 import com.mifos.feature.client.R
+import com.mifos.feature.client.clientChargeDialog.ChargeDialogScreen
 import kotlinx.coroutines.flow.flowOf
 
 @Composable
-fun ClientChargesScreen(
-    clientId: Int,
-    onBackPressed: () -> Unit
+internal fun ClientChargesScreen(
+    onBackPressed: () -> Unit,
+    viewModel: ClientChargesViewModel = hiltViewModel(),
 ) {
-
-    val viewModel: ClientChargesViewModel = hiltViewModel()
+    val clientId by viewModel.clientId.collectAsStateWithLifecycle()
     val clientChargeUiState by viewModel.clientChargesUiState.collectAsStateWithLifecycle()
     val refreshState by viewModel.isRefreshing.collectAsStateWithLifecycle()
 
@@ -70,51 +82,65 @@ fun ClientChargesScreen(
     }
 
     ClientChargesScreen(
+        clientId = clientId,
         state = clientChargeUiState,
         onBackPressed = onBackPressed,
         onRetry = { viewModel.loadCharges(clientId) },
         onRefresh = { viewModel.refreshCenterList(clientId) },
         refreshState = refreshState,
-        addCharges = {
-            // TODO Implement Dialog to add charges
-        }
+        onChargeCreated = {
+            viewModel.loadCharges(clientId)
+        },
     )
-
 }
 
 @Composable
-fun ClientChargesScreen(
+internal fun ClientChargesScreen(
+    clientId: Int,
     state: ClientChargeUiState,
     onBackPressed: () -> Unit,
     onRetry: () -> Unit,
     onRefresh: () -> Unit,
     refreshState: Boolean,
-    addCharges: () -> Unit
+    onChargeCreated: () -> Unit,
 ) {
-
     val snackbarHostState = remember { SnackbarHostState() }
     val pullRefreshState = rememberPullRefreshState(
         refreshing = refreshState,
-        onRefresh = onRefresh
+        onRefresh = onRefresh,
     )
+    var showClientChargeDialog by rememberSaveable { mutableStateOf(false) }
+
+    if (showClientChargeDialog) {
+        ChargeDialogScreen(
+            clientId = clientId,
+            onDismiss = {
+                showClientChargeDialog = false
+            },
+            onCreated = {
+                onChargeCreated()
+                showClientChargeDialog = false
+            },
+        )
+    }
 
     MifosScaffold(
         icon = MifosIcons.arrowBack,
         title = stringResource(id = R.string.feature_client_charges),
         onBackPressed = onBackPressed,
         actions = {
-            IconButton(onClick = { addCharges() }) {
+            IconButton(onClick = { showClientChargeDialog = true }) {
                 Icon(imageVector = MifosIcons.Add, contentDescription = null)
             }
         },
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
             Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
                 when (state) {
                     is ClientChargeUiState.ChargesList -> ClientChargeContent(
                         chargesPage = state.chargesPage.collectAsLazyPagingItems(),
-                        onRetry = onRetry
+                        onRetry = onRetry,
                     )
 
                     is ClientChargeUiState.Error -> MifosSweetError(message = stringResource(id = state.message)) {
@@ -126,7 +152,7 @@ fun ClientChargesScreen(
                 PullRefreshIndicator(
                     refreshing = refreshState,
                     state = pullRefreshState,
-                    modifier = Modifier.align(Alignment.TopCenter)
+                    modifier = Modifier.align(Alignment.TopCenter),
                 )
             }
         }
@@ -134,11 +160,10 @@ fun ClientChargesScreen(
 }
 
 @Composable
-fun ClientChargeContent(
+private fun ClientChargeContent(
     chargesPage: LazyPagingItems<Charges>,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
 ) {
-
     when (chargesPage.loadState.refresh) {
         is LoadState.Error -> {
             MifosSweetError(message = stringResource(id = R.string.feature_client_failed_to_load_client_charges)) {
@@ -151,7 +176,6 @@ fun ClientChargeContent(
         is LoadState.NotLoading -> Unit
     }
 
-
     LazyColumn {
         items(chargesPage.itemCount) { index ->
             chargesPage[index]?.let { ChargesItems(it) }
@@ -159,7 +183,6 @@ fun ClientChargeContent(
 
         when (chargesPage.loadState.append) {
             is LoadState.Error -> {
-
             }
 
             is LoadState.Loading -> {
@@ -179,10 +202,10 @@ fun ClientChargeContent(
                             .padding(6.dp),
                         text = stringResource(id = R.string.feature_client_no_more_charges_available),
                         style = TextStyle(
-                            fontSize = 14.sp
+                            fontSize = 14.sp,
                         ),
                         color = DarkGray,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
                     )
                 }
             }
@@ -192,9 +215,8 @@ fun ClientChargeContent(
     }
 }
 
-
 @Composable
-fun ChargesItems(charges: Charges) {
+private fun ChargesItems(charges: Charges) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -202,36 +224,36 @@ fun ChargesItems(charges: Charges) {
         shape = RoundedCornerShape(0.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
-            containerColor = BlueSecondary
-        )
+            containerColor = BlueSecondary,
+        ),
     ) {
         Spacer(modifier = Modifier.height(8.dp))
         MifosCenterDetailsText(
             stringResource(id = R.string.feature_client_client_id),
-            charges.chargeId.toString()
+            charges.chargeId.toString(),
         )
         MifosCenterDetailsText(
             stringResource(id = R.string.feature_client_charge_name),
-            charges.name ?: ""
+            charges.name ?: "",
         )
         MifosCenterDetailsText(
             stringResource(id = R.string.feature_client_charge_amount),
-            charges.amount.toString()
+            charges.amount.toString(),
         )
         MifosCenterDetailsText(
             stringResource(id = R.string.feature_client_due_date),
-            charges.formattedDueDate
+            charges.formattedDueDate,
         )
         Spacer(modifier = Modifier.height(8.dp))
     }
 }
 
 @Composable
-fun MifosCenterDetailsText(field: String, value: String) {
+private fun MifosCenterDetailsText(field: String, value: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             modifier = Modifier
@@ -241,10 +263,10 @@ fun MifosCenterDetailsText(field: String, value: String) {
             style = TextStyle(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Normal,
-                fontStyle = FontStyle.Normal
+                fontStyle = FontStyle.Normal,
             ),
             color = Black,
-            textAlign = TextAlign.Start
+            textAlign = TextAlign.Start,
         )
         Text(
             modifier = Modifier.weight(1f),
@@ -252,37 +274,37 @@ fun MifosCenterDetailsText(field: String, value: String) {
             style = TextStyle(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Normal,
-                fontStyle = FontStyle.Normal
+                fontStyle = FontStyle.Normal,
             ),
             color = DarkGray,
-            textAlign = TextAlign.Start
+            textAlign = TextAlign.Start,
         )
     }
 }
 
-class ClientChargesScreenUiStateProvider : PreviewParameterProvider<ClientChargeUiState> {
+private class ClientChargesScreenUiStateProvider : PreviewParameterProvider<ClientChargeUiState> {
 
     override val values: Sequence<ClientChargeUiState>
         get() = sequenceOf(
             ClientChargeUiState.Loading,
             ClientChargeUiState.Error(R.string.feature_client_failed_to_load_client_charges),
-            ClientChargeUiState.ChargesList(flowOf(PagingData.from(sampleClientCharge)))
+            ClientChargeUiState.ChargesList(flowOf(PagingData.from(sampleClientCharge))),
         )
-
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun ClientChargesScreenPreview(
-    @PreviewParameter(ClientChargesScreenUiStateProvider::class) state: ClientChargeUiState
+    @PreviewParameter(ClientChargesScreenUiStateProvider::class) state: ClientChargeUiState,
 ) {
     ClientChargesScreen(
+        clientId = 1,
         state = state,
         onBackPressed = {},
         onRetry = {},
         onRefresh = {},
         refreshState = false,
-        addCharges = {}
+        onChargeCreated = {},
     )
 }
 
