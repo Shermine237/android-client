@@ -6,7 +6,7 @@
 <resources>
 
     <!-- General Terms Begin Here -->
-    <string name="app_name">MifosXDroid</string>
+    <string name="app_name">AgentNEOBT</string>
     <string name="mifos_account">Mifos Account</string>
     <string name="enter_credentials"><b>Please enter your credentials.</b></string>
     <string name="datatables">DataTable</string>
